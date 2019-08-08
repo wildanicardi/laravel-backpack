@@ -32,49 +32,9 @@ class NewsCrudController extends CrudController
         | CrudPanel Configuration
         |--------------------------------------------------------------------------
         */
-
+        $this->crud->allowAccess('show');
         // TODO: remove setFromDb() and manually define Fields and Columns
-        // $this->crud->setFromDb();
-        $this->crud->addColumn(
-            [
-                'label'     => 'Nama Kategori', // Table column heading
-                'type'      => 'select',
-                'name'      => 'kategori_id', // the column that contains the ID of that connected entity;
-                'entity'    => 'kategori', // the method that defines the relationship in your Model
-                'attribute' => 'name', // foreign key attribute that is shown to user
-                'model'     => "App\Models\Kategori", // foreign key model
-
-            ]
-        );
-        $this->crud->addColumn(
-            [
-                'label'     => 'Title',
-                'name'      => 'title',
-                'type'      => 'text'
-            ]
-        );
-        $this->crud->addColumn(
-            [
-                'label'     => 'Tags',
-                'name'      => 'tags',
-                'type'      => 'text'
-            ]
-        );
-        $this->crud->addColumn(
-            [
-                'label' => 'Image', // Table column heading
-                'name'  => 'image', // The db column name
-                'type'  => 'image',
-            ]
-        );
-        $this->crud->addColumn(
-            [
-                'label' => 'Content', // Table column heading
-                'name'  => 'content', // The db column name
-                'type'  => 'textarea',
-            ]
-        );
-
+        $this->crud->setFromDb();
 
         $this->crud->addField(
             [
@@ -88,33 +48,19 @@ class NewsCrudController extends CrudController
         );
         $this->crud->addField(
             [
-                'name' => 'title',
-                'type' => 'text',
-                'label' => 'Title',
-            ]
-        );
-        $this->crud->addField(
-            [
-                'name' => 'tags',
-                'type' => 'text',
-                'label' => 'Tags',
-            ]
-        );
-        $this->crud->addField(
-            [
                 'label'        => 'Image',
                 'name'         => 'image',
                 'type'         => 'browse',
                 'tab'          => 'Uploads'
             ]
         );
-        $this->crud->addField(
-            [
-                'name'  => 'content',
-                'label' => 'Content',
-                'type'  => 'textarea',
-            ]
-        );
+        $this->crud->addColumn([
+            'name' => 'kategori.name',
+            'label' => 'Nama Kategori',
+            'type' => 'text'
+        ]);
+
+        $this->crud->removeColumn('kategori_id');
         // add asterisk for fields that are required in NewsRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');
@@ -136,5 +82,19 @@ class NewsCrudController extends CrudController
         // your additional operations after save here
         // use $this->data['entry'] or $this->crud->entry
         return $redirect_location;
+    }
+    public function show($id)
+    {
+        $content = parent::show($id);
+
+        // menampilkan kelas pada halaman preview
+        $this->crud->addColumn([
+            'name' => 'kategori.name',
+            'label' => 'Nama Kategori',
+            'type' => 'text'
+        ]);
+
+        $this->crud->removeColumn('kategori_id');
+        return $content;
     }
 }

@@ -34,19 +34,9 @@ class KategoriCrudController extends CrudController
         */
 
         // // TODO: remove setFromDb() and manually define Fields and Columns
-        // $this->crud->setFromDb();
+        $this->crud->setFromDb();
         // Columns
-        $this->crud->addColumn([
-            'name' => 'name',
-            'type' => 'text',
-            'label' => 'Name'
-        ]);
 
-        $this->crud->addField([
-            'name' => 'name',
-            'type' => 'text',
-            'label' => 'Name'
-        ]);
         // add asterisk for fields that are required in KategoriRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');
         $this->crud->setRequiredFields(UpdateRequest::class, 'edit');

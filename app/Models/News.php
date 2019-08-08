@@ -15,7 +15,7 @@ class News extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'news';
+    protected $table = 'newses';
     protected $primaryKey = 'id';
     public $timestamps = true;
     // protected $guarded = ['id'];
@@ -36,7 +36,7 @@ class News extends Model
     */
     public function kategori()
     {
-        return $this->hasMany('App\Models\Kategori','kategori_id');
+        return $this->belongsTo('App\Models\Kategori','kategori_id');
     }
     /*
     |--------------------------------------------------------------------------

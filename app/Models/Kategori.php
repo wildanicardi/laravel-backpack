@@ -15,7 +15,7 @@ class Kategori extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'kategoris';
+    protected $table = 'kategories';
     protected $primaryKey = 'id';
     public $timestamps = true;
     // protected $guarded = ['id'];
@@ -36,7 +36,7 @@ class Kategori extends Model
     */
     public function news()
     {
-        return $this->belongsTo('App\Models\News','name');
+        return $this->hasMany('App\Models\News');
     }
 
     /*
